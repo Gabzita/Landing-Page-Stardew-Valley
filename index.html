@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stardew Valley - Sua Vida Rural Espera por Você!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* Variáveis para cores e espaçamento */
+        :root {
+            --primary-green: #4CAF50; /* Verde principal */
+            --secondary-brown: #8B4513; /* Marrom para detalhes */
+            --accent-yellow: #FFC107; /* Amarelo para acentos */
+            --light-bg-color: #F8F8F8; /* Fundo claro */
+            --dark-text-color: #333; /* Texto escuro */
+            --light-text-color: #EEE; /* Texto claro */
+            --border-radius-pixel: 8px; /* Cantos arredondados */
+            --pixel-border: 4px solid #555; /* Borda pixelada */
+        }
+
+        /* Base */
+        body {
+            font-family: 'Pixelify Sans', sans-serif; /* Fonte com estilo pixelado */
+            margin: 0;
+            padding: 0;
+            background-color: #E0EEDD; /* Um verde bem claro */
+            color: var(--dark-text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--primary-green);
+            padding: 15px 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Press Start 2P', cursive; /* Fonte arcade */
+            font-size: 1.8em;
+            color: var(--accent-yellow);
+            text-decoration: none;
+            text-shadow: 2px 2px #333; /* Efeito 3D pixelado */
+            transition: color 0.3s ease;
+        }
+
+        .logo:hover {
+            color: #FFEB3B; /* Amarelo mais claro no hover */
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            color: var(--light-text-color);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1em;
+            position: relative;
+            transition: color 0.3s ease, transform 0.3s ease;
+            text-shadow: 1px 1px #333;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            background: var(--accent-yellow);
+            left: 0;
+            bottom: -5px;
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent-yellow);
+            transform: translateY(-2px);
+        }
+
+        /* Menu Hambúrguer (Mobile) */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            height: 3px;
+            width: 28px;
+            background-color: var(--light-text-color);
+            margin-bottom: 6px;
+            border-radius: 2px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(7px, 7px);
+        }
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background-image: url('https://via.placeholder.com/1920x800/81C784/FFFFFF?text=Stardew+Valley+Capa'); /* Imagem de fundo da fazenda */
+            background-size: cover;
+            background-position: center;
+            height: 70vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--light-text-color);
+            position: relative;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4); /* Overlay escuro */
+        }
+
+        .hero-content {
+            z-index: 1;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: var(--border-radius-pixel);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: var(--pixel-border);
+        }
+
+        .hero-content h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px var(--primary-green);
+            color: var(--accent-yellow);
+        }
+
+        .hero-content p {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px #000;
+        }
+
+        /* Botões */
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn.primary-btn {
+            background-color: var(--accent-yellow);
+            color: var(--dark-text-color);
+            text-shadow: 1px 1px #FFF;
+        }
+
+        .btn.primary-btn:hover {
+            background-color: #FFEB3B;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Seções de Conteúdo Comuns */
+        .content-section {
+            padding: 80px 0;
+            margin-bottom: 40px;
+            background-color: #FFF; /* Fundo padrão branco para seções */
+            border-radius: var(--border-radius-pixel);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 2px solid #D3D3D3; /* Borda suave */
+        }
+
+        .content-section h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--primary-green);
+            position: relative;
+            padding-bottom: 15px;
+            text-shadow: 2px 2px #AAA;
+        }
+
+        .content-section h2 i {
+            margin-right: 15px;
+            color: var(--secondary-brown);
+        }
+
+        .content-section h2::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 0;
+            width: 100px;
+            height: 5px;
+            background-color: var(--accent-yellow);
+            border-radius: 3px;
+        }
+
+        .light-bg {
+            background-color: var(--light-bg-color); /* Fundo cinza/bege para contraste */
+            border: 2px solid #D0D0D0;
+        }
+
+        /* Sobre o Jogo */
+        .about-section {
+            background-color: #ECF8E7; /* Um verde bem suave */
+        }
+
+        .about-grid {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .about-text ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 30px;
+        }
+
+        .about-text ul li {
+            margin-bottom: 12px;
+            font-size: 1.1em;
+            color: #444;
+        }
+
+        .about-text ul li i {
+            color: var(--primary-green);
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .about-image {
+            flex: 0 0 500px; /* Largura fixa */
+            text-align: center;
+        }
+
+        .about-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--border-radius-pixel);
+            border: var(--pixel-border);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Seção da Fazenda */
+        .farm-section p {
+            text-align: center;
+            font-size: 1.1em;
+            color: #555;
+            margin-top: 30px;
+        }
+
+        .farm-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .farm-grid img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: var(--border-radius-pixel);
+            border: var(--pixel-border);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Seção de Personagens */
+        .character-section {
+            background-color: #FDF9E7; /* Amarelo muito suave */
+        }
+        .character-intro {
+            text-align: center;
+            font-size: 1.1em;
+            color: #555;
+            margin-top: 30px;
+        }
+
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .character-card {
+            background-color: #FFF;
+            padding: 20px;
+            border-radius: var(--border-radius-pixel);
+            border: var(--pixel-border);
+            text-align: center;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .character-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .character-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%; /* Imagens circulares */
+            object-fit: cover;
+            border: 4px solid var(--accent-yellow);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+
+        .character-card h3 {
+            font-family: 'Pixelify Sans', sans-serif;
+            font-size: 1.5em;
+            color: var(--secondary-brown);
+            margin-bottom: 8px;
+            text-shadow: 1px 1px #DDD;
+        }
+
+        .character-card p {
+            font-size: 0.95em;
+            color: #666;
+        }
+
+        /* Seção de Estações */
+        .season-section p {
+            text-align: center;
+            font-size: 1.1em;
+            color: #555;
+            margin-top: 30px;
+        }
+
+        .season-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .season-card {
+            background-color: #FFF;
+            padding: 20px;
+            border-radius: var(--border-radius-pixel);
+            border: var(--pixel-border);
+            text-align: center;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .season-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .season-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: var(--border-radius-pixel);
+            border: 3px solid var(--primary-green);
+            margin-bottom: 15px;
+        }
+
+        .season-card h3 {
+            font-family: 'Pixelify Sans', sans-serif;
+            font-size: 1.6em;
+            color: var(--primary-green);
+            margin-bottom: 10px;
+        }
+
+        .season-card p {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        /* Galeria */
+        .gallery-section {
+            background-color: #E7F8EC; /* Outro verde muito suave */
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: var(--border-radius-pixel);
+            border: var(--pixel-border);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .gallery-grid img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-brown);
+            padding: 30px 0;
+            text-align: center;
+            font-size: 0.9em;
+            border-top: 4px solid var(--primary-green);
+            color: var(--light-text-color);
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        footer p {
+            margin: 0;
+            flex-grow: 1;
+            text-align: left;
+            text-shadow: 1px 1px #333;
+        }
+
+        .social-links {
+            margin-top: 0;
+        }
+
+        .social-links a {
+            color: var(--light-text-color);
+            font-size: 1.5em;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-yellow);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            header .container {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .logo {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 15px;
+            }
+            nav ul {
+                display: none; /* Esconde o menu padrão */
+                flex-direction: column;
+                width: 100%;
+                background-color: var(--primary-green);
+                position: absolute;
+                top: 80px; /* Ajusta conforme altura do header */
+                left: 0;
+                padding: 20px 0;
+                box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+                z-index: 999;
+            }
+
+            nav ul.active {
+                display: flex; /* Mostra o menu em modo mobile */
+            }
+
+            nav ul li {
+                margin: 10px 0;
+                text-align: center;
+            }
+
+            nav ul li a {
+                font-size: 1.3em;
+            }
+            nav ul li a::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .menu-toggle {
+                display: flex; /* Mostra o hambúrguer */
+                position: absolute; /* Para posicionar no canto */
+                right: 20px;
+                top: 25px;
+            }
+
+            .hero-content h1 {
+                font-size: 2.2em;
+            }
+            .hero-content p {
+                font-size: 1.1em;
+            }
+            .btn {
+                font-size: 1em;
+                padding: 10px 20px;
+            }
+
+            .content-section {
+                padding: 40px 0;
+            }
+            .content-section h2 {
+                font-size: 1.8em;
+            }
+
+            .about-grid {
+                flex-direction: column;
+            }
+            .about-image {
+                order: -1; /* Imagem acima do texto em mobile */
+                margin-bottom: 20px;
+            }
+
+            .farm-grid, .characters-grid, .season-grid, .gallery-grid {
+                grid-template-columns: 1fr; /* Uma coluna em mobile */
+            }
+
+            footer .container {
+                flex-direction: column;
+                text-align: center;
+            }
+            footer p {
+                text-align: center;
+                margin-bottom: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-section {
+                height: 50vh;
+            }
+            .hero-content {
+                padding: 20px;
+            }
+            .hero-content h1 {
+                font-size: 1.8em;
+            }
+            .hero-content p {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="#" class="logo">Stardew Valley</a>
+            <nav>
+                <ul class="nav-list">
+                    <li><a href="#inicio">Início</a></li>
+                    <li><a href="#sobre">Sobre o Jogo</a></li>
+                    <li><a href="#fazenda">Sua Fazenda</a></li>
+                    <li><a href="#personagens">Personagens</a></li>
+                    <li><a href="#estacoes">Estações</a></li>
+                    <li><a href="#galeria">Galeria</a></li>
+                </ul>
+            </nav>
+            <div class="menu-toggle" id="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="inicio" class="hero-section">
+            <div class="hero-content">
+                <h1>Sua Nova Vida Rural Espera por Você!</h1>
+                <p>Fuja da agitação da cidade e comece uma nova vida na fazenda de seu avô em Stardew Valley.</p>
+                <a href="#sobre" class="btn primary-btn">Saiba Mais!</a>
+            </div>
+        </section>
+
+        <section id="sobre" class="content-section about-section">
+            <div class="container">
+                <h2><i class="fas fa-seedling"></i> Sobre Stardew Valley</h2>
+                <div class="about-grid">
+                    <div class="about-text">
+                        <p>Stardew Valley é um RPG de simulação de fazenda que permite que você se conecte com a natureza e a comunidade. Herde uma velha fazenda abandonada e comece do zero, transformando-a em uma propriedade próspera.</p>
+                        <p>Cultive colheitas, crie animais, pesque, minere e explore cavernas misteriosas. Torne-se parte da comunidade de Pelican Town, faça amigos, encontre um cônjuge e comece uma família. As possibilidades são infinitas!</p>
+                        <ul>
+                            <li><i class="fas fa-tree"></i> Construa a fazenda dos seus sonhos.</li>
+                            <li><i class="fas fa-fish"></i> Pesque e cozinhe.</li>
+                            <li><i class="fas fa-gem"></i> Explore minas cheias de tesouros.</li>
+                            <li><i class="fas fa-users"></i> Conheça e interaja com mais de 30 personagens únicos.</li>
+                            <li><i class="fas fa-calendar-alt"></i> Experimente as quatro estações e seus eventos.</li>
+                        </ul>
+                    </div>
+                    <div class="about-image">
+                        <img src= casa.jpg alt="Sua fazenda em Stardew Valley">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="fazenda" class="content-section farm-section light-bg">
+            <div class="container">
+                <h2><i class="fas fa-tractor"></i> Sua Fazenda, Suas Regras</h2>
+                <div class="farm-grid">
+                    <img src= Colheita.jpg alt="Cultivo de Colheitas">
+                    <img src= Animais.jpg alt="Criação de Animais">
+                    <img src= Fazenda.jpg alt="Construções na Fazenda">
+                </div>
+                <p>Na sua fazenda, você decide como quer viver. Plantação de vegetais, criação de gado, produção de mel ou vinho artesanal – o céu é o limite! Desbloqueie novas construções e equipamentos para expandir sua produtividade e personalize sua fazenda com centenas de itens decorativos.</p>
+            </div>
+        </section>
+
+        <section id="personagens" class="content-section character-section">
+            <div class="container">
+                <h2><i class="fas fa-heart"></i> Conheça a Comunidade</h2>
+                <div class="characters-grid">
+                    <div class="character-card">
+                        <img src= Abigail.jpg alt="Abigail">
+                        <h3>Abigail</h3>
+                        <p>Misteriosa e amante de videogames e minerais.</p>
+                    </div>
+                    <div class="character-card">
+                        <img src= Sebastian.jpg alt="Sebastian">
+                        <h3>Sebastian</h3>
+                        <p>O recluso programador que vive no porão de sua mãe.</p>
+                    </div>
+                    <div class="character-card">
+                        <img src= Leah.jpg alt="Leah">
+                        <h3>Leah</h3>
+                        <p>Uma artista talentosa que vive em sua cabana na floresta.</p>
+                    </div>
+                    <div class="character-card">
+                        <img src= Harvey.jpg alt="Harvey">
+                        <h3>Harvey</h3>
+                        <p>O gentil médico da cidade, sempre preocupado com a saúde de todos.</p>
+                    </div>
+                </div>
+                <p class="character-intro">Pelican Town é lar de muitos personagens com histórias e personalidades únicas. Construa amizades, ajude-os em suas tarefas e talvez encontre o amor!</p>
+            </div>
+        </section>
+
+        <section id="estacoes" class="content-section season-section light-bg">
+            <div class="container">
+                <h2><i class="fas fa-cloud-sun"></i> As Quatro Estações</h2>
+                <div class="season-grid">
+                    <div class="season-card">
+                        <img src= Primavera.jpg alt="Primavera Stardew Valley">
+                        <h3>Primavera</h3>
+                        <p>O despertar da natureza! Plante sementes, floresça seu jardim e celebre o Festival do Ovo.</p>
+                    </div>
+                    <div class="season-card">
+                        <img src= Verao.jpg alt="Verão Stardew Valley">
+                        <h3>Verão</h3>
+                        <p>Dias longos e ensolarados. Ideal para pescar, colher frutas e aproveitar o Festival da Lua de Inverno.</p>
+                    </div>
+                    <div class="season-card">
+                        <img src= outono.jpg alt="Outono Stardew Valley">
+                        <h3>Outono</h3>
+                        <p>As folhas caem e a colheita é farta. Prepare-se para o Festival da Colheita e a Spooky Night.</p>
+                    </div>
+                    <div class="season-card">
+                        <img src= inverno.jpg alt="Inverno Stardew Valley">
+                        <h3>Inverno</h3>
+                        <p>A terra descansa, mas há muito o que fazer! Minere, pesque no gelo e celebre o Festival das Estrelas.</p>
+                    </div>
+                </div>
+                <p>Cada estação em Stardew Valley traz novas colheitas, peixes, eventos e visuais para o seu vale. Planeje sua fazenda de acordo!</p>
+            </div>
+        </section>
+
+        <section id="galeria" class="content-section gallery-section">
+            <div class="container">
+                <h2><i class="fas fa-images"></i> Momentos em Stardew Valley</h2>
+                <div class="gallery-grid">
+                    <img src= verao2.jpg alt="Cena da Fazenda no Verão">
+                    <img src= caverna.jpg alt="Cena da Mina com Cristais">
+                    <img src= pesca.jpg alt="Cena de Pesca no Rio">
+                    <img src= ovo.jpg alt="Cena do Festival do Ovo">
+                    <img src= interior.jpg alt="Interior da Casa do Fazendeiro">
+                    <img src= loja.jpg alt="Loja do Pierre">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Stardew Valley Fanpage. Jogo original por ConcernedApe.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-discord"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navList = document.querySelector('nav .nav-list');
+
+            if (mobileMenu && navList) {
+                mobileMenu.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('active');
+                    navList.classList.toggle('active');
+                });
+
+                // Fecha o menu ao clicar em um link (útil para mobile)
+                document.querySelectorAll('.nav-list li a').forEach(item => {
+                    item.addEventListener('click', () => {
+                        if (window.innerWidth <= 768) {
+                            mobileMenu.classList.remove('active');
+                            navList.classList.remove('active');
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
